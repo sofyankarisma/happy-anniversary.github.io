@@ -6,17 +6,16 @@
     <title>Pesan Spesial Untukmu</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        /* --- VARIABEL WARNA BARU UNTUK REALISME --- */
+        /* --- VARIABEL WARNA --- */
         :root {
             --bg-color: #fce4ec;
-            /* Palet Pink yang lebih kaya untuk gradien */
             --env-light: #ffadc4; 
             --env-medium: #ff94af;
             --env-dark: #ef829c;
-            --env-shadow-color: rgba(136, 59, 77, 0.35); /* Warna bayangan yang realistis */
+            --env-shadow-color: rgba(136, 59, 77, 0.35);
             
             --card-bg: #fffaf0;
-            --accent-color: #c2185b; /* Merah yang lebih elegan */
+            --accent-color: #c2185b;
         }
 
         body {
@@ -26,7 +25,6 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            /* Menambahkan tekstur halus pada background */
             background: var(--bg-color);
             background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
                               linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
@@ -38,7 +36,7 @@
         .container {
             position: relative;
             width: 300px;
-            height: 500px; /* Sedikit dipertinggi */
+            height: 500px; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -51,25 +49,22 @@
             height: 180px;
             margin-top: 80px;
             cursor: pointer;
-            /* Bayangan keseluruhan yang lebih lembut */
             filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
         }
 
-        /* --- BADAN AMPLOP REALISTIS --- */
+        /* --- BADAN AMPLOP --- */
         .envelope-body {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 100%;
-            /* Gradien untuk memberi kesan melengkung */
             background: linear-gradient(to bottom, var(--env-medium), var(--env-dark));
             border-radius: 0 0 10px 10px;
             z-index: 2; 
-            /* Bayangan dalam (inset) untuk menciptakan kedalaman kantung */
             box-shadow: inset 0 10px 30px -10px rgba(0,0,0,0.3);
         }
         
-        /* --- LIPATAN BAWAH REALISTIS --- */
+        /* --- LIPATAN BAWAH --- */
         .envelope-body::after {
             content: '';
             position: absolute;
@@ -78,32 +73,46 @@
             width: 0;
             height: 0;
             border-style: solid;
-            border-width: 0 140px 100px 140px; 
-            /* Warna solid sedikit lebih terang dari bagian paling gelap badan */
+            /* Puncak segitiga sedikit ke atas (130px) */
+            border-width: 0 140px 130px 140px; 
             border-color: transparent transparent var(--env-medium) transparent;
             z-index: 3; 
-            /* Bayangan halus di ATAS lipatan ini, memberi kesan menumpuk */
             filter: drop-shadow(0 -3px 5px rgba(0,0,0,0.1));
         }
 
-        /* Logo pada Amplop */
-        .envelope-logo {
+        /* --- LOGO CLICKABLE --- */
+        /* Class ini sekarang diterapkan pada tag <a> */
+        .envelope-logo-link {
             position: absolute;
             z-index: 4; 
-            bottom: 15px;
+            bottom: 20px; 
             left: 50%;
             transform: translateX(-50%);
             width: 90px;
-            height: auto;
-            opacity: 0.95;
-            /* Bayangan logo agar terlihat menempel */
-            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+            /* Style Sticker */
             background-color: white; 
             padding: 5px;
             border-radius: 5px;
+            opacity: 0.95;
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+            /* Agar kursor berubah jadi tangan saat di-hover */
+            cursor: pointer;
+            display: block;
+            transition: transform 0.2s ease;
+        }
+        
+        /* Efek hover pada logo */
+        .envelope-logo-link:hover {
+            transform: translateX(-50%) scale(1.05);
         }
 
-        /* --- TUTUP AMPLOP REALISTIS --- */
+        .envelope-logo-link img {
+            width: 100%; /* Gambar mengikuti lebar container link */
+            height: auto;
+            display: block;
+        }
+
+        /* --- TUTUP AMPLOP --- */
         .envelope-lid {
             position: absolute;
             top: 0;
@@ -112,13 +121,11 @@
             height: 0;
             border-style: solid;
             border-width: 110px 140px 0 140px; 
-            /* Warna tutup sedikit lebih terang (menangkap cahaya) */
             border-color: var(--env-light) transparent transparent transparent;
             transform-origin: top; 
             transition: transform 0.6s ease-in-out, border-color 0.6s ease;
             z-index: 5; 
             border-radius: 10px 10px 0 0;
-            /* Bayangan penting di BAWAH tutup, menimpa badan amplop */
             filter: drop-shadow(0 5px 10px var(--env-shadow-color));
         }
 
@@ -131,12 +138,10 @@
             width: 240px;
             height: auto; 
             background-color: var(--card-bg);
-            /* Sedikit tekstur kertas pada kartu */
             background-image: linear-gradient(to bottom, #fffaf0, #f7f0e6);
             padding: 20px;
             text-align: center;
             border-radius: 8px;
-            /* Bayangan kartu lebih tajam */
             box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
             
             opacity: 0; 
@@ -167,6 +172,13 @@
             display: inline-block;
             border: 1px solid #eee;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        
+        /* Efek hover pada QR Box */
+        .qr-box:hover {
+            transform: scale(1.03);
+            border-color: var(--accent-color);
         }
         
         .qr-box img {
@@ -216,9 +228,7 @@
         
         .container.open .envelope-lid {
             transform: rotateX(180deg); 
-            /* Saat terbuka, warna dalam sedikit lebih gelap */
             border-color: var(--env-medium) transparent transparent transparent; 
-            /* Hilangkan bayangan drop saat terbuka rata */
             filter: none;
             z-index: 1;
         }
@@ -230,8 +240,8 @@
             transition-delay: 0.2s; 
         }
 
-        /* --- BAGIAN YANG DIUBAH SEBELUMNYA (POSISI TURUN) --- */
         .container.open .envelope-wrapper {
+            /* Posisi turun saat terbuka */
             transform: translateY(120px);
             transition: transform 0.8s ease;
         }
@@ -253,16 +263,22 @@
             
             <div class="card-content">
                 <h2>Untukmu, Spesial.✨</h2>
-                <p>Scan untuk melihat pesan:</p>
+                <p>Klik QR Code untuk melihat pesan:</p>
+                
                 <div class="qr-box">
-                    <img src="public/img/qrcode.png" alt="QR Code">
+                    <a href="https://sofyankarisma.github.io/happy-anniversary.github.io/" target="_blank">
+                        <img src="public/img/qrcode.png" alt="QR Code">
+                    </a>
                 </div>
-                <p style="margin-top:8px; font-size: 9px; color: #7a555f;">Klik link yang muncul</p>
+                
+                <p style="margin-top:8px; font-size: 9px; color: #7a555f;">Klik gambar di atas</p>
                 <p style="font-weight:600; margin-top:8px; font-size: 9px; color: #7a555f;">Tunda - Temu Undangan Digital</p>
             </div>
 
             <div class="envelope-body">
-                <img src="public/img/logo-tunda.png" alt="Logo TUNDA" class="envelope-logo">
+                <a href="https://tundadigital.com" target="_blank" class="envelope-logo-link">
+                    <img src="public/img/logo-tunda.png" alt="Logo TUNDA">
+                </a>
             </div>
         </div>
 
