@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Spesial Untukmu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #fce4ec;
+            --envelope-color: #ff8fa3;
+            --envelope-shadow: #e07a8c;
+            --card-bg: #fffaf0;
+            --accent-color: #d32f2f;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--bg-color);
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 300px;
+            /* Menambah tinggi container agar tidak terpotong */
+            height: 450px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 280px;
+            height: 180px;
+            margin-top: 100px; /* Menurunkan posisi amplop awal agar lebih tengah */
+            cursor: pointer;
+        }
+
+        .envelope-body {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--envelope-color);
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            z-index: 2;
+            overflow: hidden; 
+        }
+        
+        .envelope-body::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 140px 100px 140px; 
+            border-color: transparent transparent var(--envelope-shadow) transparent;
+            z-index: 3;
+        }
+
+        .envelope-lid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 110px 140px 0 140px; 
+            border-color: var(--envelope-color) transparent transparent transparent;
+            transform-origin: top; 
+            transition: transform 0.6s ease-in-out;
+            z-index: 5; 
+            border-radius: 10px 10px 0 0;
+        }
+
+        /* --- Kartu Isi (QR Code) --- */
+        .card-content {
+            position: absolute;
+            bottom: 0; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 240px;
+            /* Tinggi otomatis mengikuti isi */
+            height: auto; 
+            background-color: var(--card-bg);
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            /* Transisi lebih halus dengan efek 'membal' sedikit */
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
+            z-index: 1; 
+            border: 2px dashed #ffcbd7;
+        }
+
+        .card-content h2 {
+            font-family: 'Dancing Script', cursive;
+            color: var(--accent-color);
+            margin: 0 0 5px 0;
+            font-size: 22px;
+        }
+        
+        .card-content p {
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .qr-box {
+            background: white;
+            padding: 8px;
+            border-radius: 8px;
+            display: inline-block;
+            border: 1px solid #eee;
+        }
+        
+        .qr-box img {
+            width: 130px; /* Ukuran QR sedikit dikecilkan agar muat rapi */
+            height: auto;
+            display: block;
+        }
+
+        /* --- Tombol Love --- */
+        .btn-love {
+            margin-top: 40px; /* Jarak tombol dari amplop */
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .btn-love:hover {
+            transform: scale(1.05);
+            background-color: #b71c1c;
+        }
+        
+        .heart-icon {
+            font-size: 20px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- STATE TERBUKA (Perubahan disini) --- */
+        
+        .container.open .envelope-lid {
+            transform: rotateX(180deg); 
+            border-color: var(--envelope-shadow) transparent transparent transparent; 
+            z-index: 1;
+        }
+
+        .container.open .card-content {
+            /* PERUBAHAN UTAMA: 
+               translateY saya ubah dari -190px menjadi -135px.
+               Ini membuat kartu naik, tapi tidak terlalu tinggi.
+               Kartu akan terlihat menumpuk sedikit di atas amplop (lebih estetis).
+            */
+            transform: translateX(-50%) translateY(-135px); 
+            z-index: 4; /* Kartu muncul di depan badan amplop */
+            transition-delay: 0.2s; 
+        }
+
+        /* Opsional: Membuat amplop sedikit turun saat dibuka agar seimbang */
+        .container.open .envelope-wrapper {
+            transform: translateY(20px);
+            transition: transform 0.8s ease;
+        }
+
+        .container.open .btn-love {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container" id="envelopeContainer">
+        
+        <div class="envelope-wrapper">
+            <div class="envelope-lid"></div>
+            
+            <div class="card-content">
+                <h2>Untukmu, Spesial.✨</h2>
+                <p>Scan untuk melihat pesan:</p>
+                <div class="qr-box">
+                    <img src="public/img/qrcode.png" alt="QR Code">
+                </div>
+                <p style="margin-top:8px; font-size: 9px; color: #aaa;">Klik link yang muncul</p>
+            </div>
+
+            <div class="envelope-body"></div>
+        </div>
+
+        <button class="btn-love" id="openBtn">
+            Buka Amplop <span class="heart-icon">❤️</span>
+        </button>
+
+    </div>
+
+    <script>
+        const openBtn = document.getElementById('openBtn');
+        const envelopeContainer = document.getElementById('envelopeContainer');
+
+        openBtn.addEventListener('click', function() {
+            envelopeContainer.classList.add('open');
+        });
+    </script>
+
+</body>
+</html>

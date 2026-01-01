@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pesan Spesial Untukmu</title>
+    <style>
+        /* Mengatur tampilan dasar */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Desain Kartu */
+        .card {
+            background-color: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 350px;
+            width: 90%;
+            border: 1px solid #eee;
+        }
+
+        /* Teks Judul */
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* Teks Paragraf */
+        p {
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Wadah Gambar QR */
+        .qr-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 2px dashed #ddd;
+        }
+
+        /* Mengatur ukuran gambar QR agar responsif */
+        .qr-box img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            display: block;
+        }
+
+        /* Catatan Kaki */
+        .footer-note {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+        }
+
+        /* Animasi kecil agar menarik */
+        .card {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1>✨ Ada Pesan Untukmu ✨</h1>
+        <p>Seseorang mengirimkan ucapan spesial. Silakan scan kode di bawah ini untuk membukanya.</p>
+        
+        <div class="qr-box">
+            <img src="public/img/qrcode.png" alt="QR Code Ucapan">
+        </div>
+
+        <p class="footer-note">Gunakan kamera HP atau aplikasi scan untuk melihat detail ucapan.</p>
+    </div>
+
+</body>
+</html>
