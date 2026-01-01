@@ -66,15 +66,44 @@ function kalimatakhir() {
         },
     }).go();
 }
+// function mulaiketikAkhir() {
+//     setInterval(berjatuhan, 250);
+//     pesanAkhir.style = "position:relative;opacity:1;visibility:visible;transform: scale(1)";
+//     new TypeIt("#pesanAkhir", {
+//         strings: ["" + pesanAkhir2], startDelay: 100, speed: 60, cursor: true, deleteSpeed: 20, breakLines: false, waitUntilVisible: true, lifelike: true,
+//         afterComplete: function () {
+//             pesanAkhir.innerHTML = "" + pesanAkhir2;
+//             setTimeout(munculkanCopyright, 100);
+//         },
+//     }).go();
+// }
 function mulaiketikAkhir() {
     setInterval(berjatuhan, 250);
     pesanAkhir.style = "position:relative;opacity:1;visibility:visible;transform: scale(1)";
+    
     new TypeIt("#pesanAkhir", {
-        strings: ["" + pesanAkhir2], startDelay: 100, speed: 60, cursor: true, deleteSpeed: 20, breakLines: false, waitUntilVisible: true, lifelike: true,
+        strings: ["" + pesanAkhir2], 
+        startDelay: 100, 
+        speed: 60, 
+        cursor: true, 
+        deleteSpeed: 20, 
+        breakLines: false, 
+        waitUntilVisible: true, 
+        lifelike: true,
         afterComplete: function () {
             pesanAkhir.innerHTML = "" + pesanAkhir2;
+            // Panggil fungsi untuk memunculkan copyright setelah selesai mengetik
+            setTimeout(munculkanCopyright, 1000); 
         },
     }).go();
+}
+
+function munculkanCopyright() {
+    var copyright = document.getElementById('copyright');
+    if(copyright){
+        copyright.style = "display:block; visibility:visible;";
+        copyright.style.opacity = "1";
+    }
 }
 
 function initengahan() {

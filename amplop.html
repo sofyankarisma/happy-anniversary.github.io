@@ -3,17 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesan Spesial Untukmu</title>
+    <title>Undangan Digital TUNDA</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Warna disesuaikan agar cocok dengan Logo TUNDA (Coklat Emas) */
+            --bg-color: #f7f3f0;       /* Background halaman krem muda */
+            --envelope-color: #e6dace; /* Warna Amplop dasar */
+            --envelope-shadow: #d1c0b0;/* Warna Lipatan (Shadow) */
+            --card-bg: #fffaf0;        /* Warna Kertas dalam */
+            --accent-color: #a68b5f;   /* Warna Teks/Tombol (Coklat Logo) */
+            --text-color: #5a4d41;
+        }
+        /* :root {
             --bg-color: #fce4ec;
             --envelope-color: #ff8fa3;
             --envelope-shadow: #e07a8c;
             --card-bg: #fffaf0;
             --accent-color: #d32f2f;
-        }
-
+        } */
         body {
             margin: 0;
             padding: 0;
@@ -29,8 +37,7 @@
         .container {
             position: relative;
             width: 300px;
-            /* Menambah tinggi container agar tidak terpotong */
-            height: 450px; 
+            height: 500px; /* Tinggi container disesuaikan */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -41,10 +48,11 @@
             position: relative;
             width: 280px;
             height: 180px;
-            margin-top: 100px; /* Menurunkan posisi amplop awal agar lebih tengah */
+            margin-top: 80px;
             cursor: pointer;
         }
 
+        /* --- Badan Utama Amplop --- */
         .envelope-body {
             position: absolute;
             bottom: 0;
@@ -53,10 +61,10 @@
             background-color: var(--envelope-color);
             border-radius: 0 0 10px 10px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            z-index: 2;
-            overflow: hidden; 
+            z-index: 2; /* Layer 2 */
         }
         
+        /* --- Lipatan Segitiga Bawah (Saku) --- */
         .envelope-body::after {
             content: '';
             position: absolute;
@@ -67,9 +75,26 @@
             border-style: solid;
             border-width: 0 140px 100px 140px; 
             border-color: transparent transparent var(--envelope-shadow) transparent;
-            z-index: 3;
+            z-index: 3; /* Layer 3: Di atas badan amplop */
         }
 
+        /* --- PERBAIKAN LOGO DISINI --- */
+        .envelope-logo {
+            position: absolute;
+            z-index: 4; /* Layer 4: WAJIB DI ATAS Z-INDEX LIPATAN (3) */
+            
+            /* Mengatur posisi agar pas di tengah segitiga bawah */
+            bottom: 20px; 
+            left: 50%;
+            transform: translateX(-50%);
+            
+            width: 100px; /* Ukuran logo disesuaikan */
+            height: auto;
+            opacity: 0.9;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.1));
+        }
+
+        /* --- Tutup Amplop --- */
         .envelope-lid {
             position: absolute;
             top: 0;
@@ -81,7 +106,7 @@
             border-color: var(--envelope-color) transparent transparent transparent;
             transform-origin: top; 
             transition: transform 0.6s ease-in-out;
-            z-index: 5; 
+            z-index: 5; /* Layer 5: Paling atas saat tertutup */
             border-radius: 10px 10px 0 0;
         }
 
@@ -92,17 +117,15 @@
             left: 50%;
             transform: translateX(-50%);
             width: 240px;
-            /* Tinggi otomatis mengikuti isi */
             height: auto; 
             background-color: var(--card-bg);
             padding: 20px;
             text-align: center;
             border-radius: 8px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-            /* Transisi lebih halus dengan efek 'membal' sedikit */
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
-            z-index: 1; 
-            border: 2px dashed #ffcbd7;
+            z-index: 1; /* Layer 1: Paling belakang (di dalam amplop) */
+            border: 1px solid #e0e0e0;
         }
 
         .card-content h2 {
@@ -114,7 +137,7 @@
         
         .card-content p {
             font-size: 11px;
-            color: #666;
+            color: var(--text-color);
             margin-bottom: 10px;
         }
 
@@ -127,14 +150,14 @@
         }
         
         .qr-box img {
-            width: 130px; /* Ukuran QR sedikit dikecilkan agar muat rapi */
+            width: 120px;
             height: auto;
             display: block;
         }
 
         /* --- Tombol Love --- */
         .btn-love {
-            margin-top: 40px; /* Jarak tombol dari amplop */
+            margin-top: 50px;
             background-color: var(--accent-color);
             color: white;
             border: none;
@@ -147,14 +170,14 @@
             gap: 10px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 5px 15px rgba(166, 139, 95, 0.4);
             transition: all 0.3s ease;
             z-index: 10;
         }
 
         .btn-love:hover {
             transform: scale(1.05);
-            background-color: #b71c1c;
+            background-color: #8c734b;
         }
         
         .heart-icon {
@@ -168,28 +191,22 @@
             100% { transform: scale(1); }
         }
 
-        /* --- STATE TERBUKA (Perubahan disini) --- */
+        /* --- STATE TERBUKA --- */
         
         .container.open .envelope-lid {
             transform: rotateX(180deg); 
             border-color: var(--envelope-shadow) transparent transparent transparent; 
-            z-index: 1;
+            z-index: 1; /* Pindah ke belakang saat terbuka */
         }
 
         .container.open .card-content {
-            /* PERUBAHAN UTAMA: 
-               translateY saya ubah dari -190px menjadi -135px.
-               Ini membuat kartu naik, tapi tidak terlalu tinggi.
-               Kartu akan terlihat menumpuk sedikit di atas amplop (lebih estetis).
-            */
-            transform: translateX(-50%) translateY(-135px); 
-            z-index: 4; /* Kartu muncul di depan badan amplop */
+            transform: translateX(-50%) translateY(-145px); 
+            z-index: 4; /* Naik ke atas layer lipatan */
             transition-delay: 0.2s; 
         }
 
-        /* Opsional: Membuat amplop sedikit turun saat dibuka agar seimbang */
         .container.open .envelope-wrapper {
-            transform: translateY(20px);
+            transform: translateY(30px);
             transition: transform 0.8s ease;
         }
 
@@ -208,19 +225,21 @@
             <div class="envelope-lid"></div>
             
             <div class="card-content">
-                <h2>Untukmu, Spesial.✨</h2>
-                <p>Scan untuk melihat pesan:</p>
+                <h2>Undangan Spesial</h2>
+                <p>Scan untuk detail acara:</p>
                 <div class="qr-box">
                     <img src="public/img/qrcode.png" alt="QR Code">
                 </div>
-                <p style="margin-top:8px; font-size: 9px; color: #aaa;">Klik link yang muncul</p>
+                <p style="margin-top:8px; font-size: 9px; color: #aaa;">Tunda - Temu Undangan Digital</p>
             </div>
 
-            <div class="envelope-body"></div>
+            <div class="envelope-body">
+                <img src="public/img/logo-tunda.png" alt="Logo TUNDA" class="envelope-logo">
+            </div>
         </div>
 
         <button class="btn-love" id="openBtn">
-            Buka Amplop <span class="heart-icon">❤️</span>
+            Buka Undangan <span class="heart-icon">❤️</span>
         </button>
 
     </div>
