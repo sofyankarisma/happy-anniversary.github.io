@@ -6,12 +6,17 @@
     <title>Pesan Spesial Untukmu</title>
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* --- VARIABEL WARNA BARU UNTUK REALISME --- */
         :root {
             --bg-color: #fce4ec;
-            --envelope-color: #ff8fa3;
-            --envelope-shadow: #e07a8c;
+            /* Palet Pink yang lebih kaya untuk gradien */
+            --env-light: #ffadc4; 
+            --env-medium: #ff94af;
+            --env-dark: #ef829c;
+            --env-shadow-color: rgba(136, 59, 77, 0.35); /* Warna bayangan yang realistis */
+            
             --card-bg: #fffaf0;
-            --accent-color: #d32f2f;
+            --accent-color: #c2185b; /* Merah yang lebih elegan */
         }
 
         body {
@@ -21,7 +26,11 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            /* Menambahkan tekstur halus pada background */
             background: var(--bg-color);
+            background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+            background-size: 30px 30px;
             font-family: 'Poppins', sans-serif;
             overflow: hidden;
         }
@@ -29,7 +38,7 @@
         .container {
             position: relative;
             width: 300px;
-            height: 450px; 
+            height: 500px; /* Sedikit dipertinggi */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,23 +49,27 @@
             position: relative;
             width: 280px;
             height: 180px;
-            margin-top: 100px;
+            margin-top: 80px;
             cursor: pointer;
+            /* Bayangan keseluruhan yang lebih lembut */
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.15));
         }
 
-        /* Badan Amplop */
+        /* --- BADAN AMPLOP REALISTIS --- */
         .envelope-body {
             position: absolute;
             bottom: 0;
             width: 100%;
             height: 100%;
-            background-color: var(--envelope-color);
+            /* Gradien untuk memberi kesan melengkung */
+            background: linear-gradient(to bottom, var(--env-medium), var(--env-dark));
             border-radius: 0 0 10px 10px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             z-index: 2; 
+            /* Bayangan dalam (inset) untuk menciptakan kedalaman kantung */
+            box-shadow: inset 0 10px 30px -10px rgba(0,0,0,0.3);
         }
         
-        /* Lipatan Segitiga Bawah */
+        /* --- LIPATAN BAWAH REALISTIS --- */
         .envelope-body::after {
             content: '';
             position: absolute;
@@ -66,8 +79,11 @@
             height: 0;
             border-style: solid;
             border-width: 0 140px 100px 140px; 
-            border-color: transparent transparent var(--envelope-shadow) transparent;
+            /* Warna solid sedikit lebih terang dari bagian paling gelap badan */
+            border-color: transparent transparent var(--env-medium) transparent;
             z-index: 3; 
+            /* Bayangan halus di ATAS lipatan ini, memberi kesan menumpuk */
+            filter: drop-shadow(0 -3px 5px rgba(0,0,0,0.1));
         }
 
         /* Logo pada Amplop */
@@ -80,13 +96,14 @@
             width: 90px;
             height: auto;
             opacity: 0.95;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+            /* Bayangan logo agar terlihat menempel */
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
             background-color: white; 
             padding: 5px;
             border-radius: 5px;
         }
 
-        /* Tutup Amplop */
+        /* --- TUTUP AMPLOP REALISTIS --- */
         .envelope-lid {
             position: absolute;
             top: 0;
@@ -95,14 +112,17 @@
             height: 0;
             border-style: solid;
             border-width: 110px 140px 0 140px; 
-            border-color: var(--envelope-color) transparent transparent transparent;
+            /* Warna tutup sedikit lebih terang (menangkap cahaya) */
+            border-color: var(--env-light) transparent transparent transparent;
             transform-origin: top; 
-            transition: transform 0.6s ease-in-out;
+            transition: transform 0.6s ease-in-out, border-color 0.6s ease;
             z-index: 5; 
             border-radius: 10px 10px 0 0;
+            /* Bayangan penting di BAWAH tutup, menimpa badan amplop */
+            filter: drop-shadow(0 5px 10px var(--env-shadow-color));
         }
 
-        /* --- KARTU ISI (QR Code) --- */
+        /* KARTU ISI */
         .card-content {
             position: absolute;
             bottom: 0; 
@@ -111,15 +131,18 @@
             width: 240px;
             height: auto; 
             background-color: var(--card-bg);
+            /* Sedikit tekstur kertas pada kartu */
+            background-image: linear-gradient(to bottom, #fffaf0, #f7f0e6);
             padding: 20px;
             text-align: center;
             border-radius: 8px;
-            box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
+            /* Bayangan kartu lebih tajam */
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.15);
             
-            opacity: 0; /* Awalnya hidden */
+            opacity: 0; 
             z-index: 1; 
             
-            border: 2px dashed #ffcbd7;
+            border: 1px solid #e0d0c0;
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
         }
 
@@ -127,21 +150,23 @@
             font-family: 'Dancing Script', cursive;
             color: var(--accent-color);
             margin: 0 0 5px 0;
-            font-size: 22px;
+            font-size: 24px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
         }
         
         .card-content p {
             font-size: 11px;
-            color: #666;
+            color: #7a555f;
             margin-bottom: 10px;
         }
 
         .qr-box {
             background: white;
-            padding: 8px;
+            padding: 10px;
             border-radius: 8px;
             display: inline-block;
             border: 1px solid #eee;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
         }
         
         .qr-box img {
@@ -152,11 +177,11 @@
 
         /* Tombol Love */
         .btn-love {
-            margin-top: 40px;
-            background-color: var(--accent-color);
+            margin-top: 60px;
+            background: linear-gradient(to bottom right, var(--accent-color), #ad1457);
             color: white;
             border: none;
-            padding: 12px 35px;
+            padding: 14px 40px;
             font-size: 16px;
             border-radius: 50px;
             cursor: pointer;
@@ -165,14 +190,15 @@
             gap: 10px;
             font-family: 'Poppins', sans-serif;
             font-weight: 600;
-            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+            box-shadow: 0 8px 20px rgba(194, 24, 91, 0.4);
             transition: all 0.3s ease;
             z-index: 10;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
 
         .btn-love:hover {
-            transform: scale(1.05);
-            background-color: #b71c1c;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(194, 24, 91, 0.5);
         }
         
         .heart-icon {
@@ -190,7 +216,10 @@
         
         .container.open .envelope-lid {
             transform: rotateX(180deg); 
-            border-color: var(--envelope-shadow) transparent transparent transparent; 
+            /* Saat terbuka, warna dalam sedikit lebih gelap */
+            border-color: var(--env-medium) transparent transparent transparent; 
+            /* Hilangkan bayangan drop saat terbuka rata */
+            filter: none;
             z-index: 1;
         }
 
@@ -201,9 +230,8 @@
             transition-delay: 0.2s; 
         }
 
-        /* --- BAGIAN YANG DIUBAH --- */
+        /* --- BAGIAN YANG DIUBAH SEBELUMNYA (POSISI TURUN) --- */
         .container.open .envelope-wrapper {
-            /* Mengubah dari 20px menjadi 120px agar turun lebih jauh */
             transform: translateY(120px);
             transition: transform 0.8s ease;
         }
@@ -211,6 +239,7 @@
         .container.open .btn-love {
             opacity: 0;
             pointer-events: none;
+            transform: translateY(20px);
         }
 
     </style>
@@ -228,8 +257,8 @@
                 <div class="qr-box">
                     <img src="public/img/qrcode.png" alt="QR Code">
                 </div>
-                <p style="margin-top:8px; font-size: 9px; color: #aaa;">Klik link yang muncul</p>
-                <p style="font-weight:600; margin-top:8px; font-size: 9px; color: #aaa;">Tunda - Temu Undangan Digital</p>
+                <p style="margin-top:8px; font-size: 9px; color: #7a555f;">Klik link yang muncul</p>
+                <p style="font-weight:600; margin-top:8px; font-size: 9px; color: #7a555f;">Tunda - Temu Undangan Digital</p>
             </div>
 
             <div class="envelope-body">
