@@ -81,7 +81,6 @@
             height: auto;
             opacity: 0.95;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
-            /* Style background putih sesuai request Anda sebelumnya */
             background-color: white; 
             padding: 5px;
             border-radius: 5px;
@@ -117,12 +116,10 @@
             border-radius: 8px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
             
-            /* --- PERUBAHAN UTAMA DISINI --- */
-            opacity: 0; /* Awalnya tidak terlihat sama sekali */
+            opacity: 0; /* Awalnya hidden */
             z-index: 1; 
             
             border: 2px dashed #ffcbd7;
-            /* Transisi untuk transform dan opacity */
             transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
         }
 
@@ -198,16 +195,16 @@
         }
 
         .container.open .card-content {
-            /* Munculkan kartu saat dibuka */
             opacity: 1; 
-            
             transform: translateX(-50%) translateY(-135px); 
             z-index: 4; 
             transition-delay: 0.2s; 
         }
 
+        /* --- BAGIAN YANG DIUBAH --- */
         .container.open .envelope-wrapper {
-            transform: translateY(20px);
+            /* Mengubah dari 20px menjadi 120px agar turun lebih jauh */
+            transform: translateY(120px);
             transition: transform 0.8s ease;
         }
 
