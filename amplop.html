@@ -7,7 +7,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* --- KEMBALI KE TEMA PINK (Desain Sebelumnya) --- */
             --bg-color: #fce4ec;
             --envelope-color: #ff8fa3;
             --envelope-shadow: #e07a8c;
@@ -54,10 +53,10 @@
             background-color: var(--envelope-color);
             border-radius: 0 0 10px 10px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-            z-index: 2; /* Layer 2 */
+            z-index: 2; 
         }
         
-        /* Lipatan Segitiga Bawah (Kantung) */
+        /* Lipatan Segitiga Bawah */
         .envelope-body::after {
             content: '';
             position: absolute;
@@ -68,21 +67,24 @@
             border-style: solid;
             border-width: 0 140px 100px 140px; 
             border-color: transparent transparent var(--envelope-shadow) transparent;
-            z-index: 3; /* Layer 3 */
+            z-index: 3; 
         }
 
-        /* --- LOGO FIX (Posisi diperbaiki untuk desain Pink) --- */
+        /* Logo pada Amplop */
         .envelope-logo {
             position: absolute;
-            /* Z-index 4: Agar berada DI ATAS lipatan amplop (yang z-index 3) */
             z-index: 4; 
-            bottom: 15px; /* Sedikit naik dari bawah */
+            bottom: 15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90px; /* Ukuran disesuaikan agar manis di amplop pink */
+            width: 90px;
             height: auto;
             opacity: 0.95;
             filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+            /* Style background putih sesuai request Anda sebelumnya */
+            background-color: white; 
+            padding: 5px;
+            border-radius: 5px;
         }
 
         /* Tutup Amplop */
@@ -97,11 +99,11 @@
             border-color: var(--envelope-color) transparent transparent transparent;
             transform-origin: top; 
             transition: transform 0.6s ease-in-out;
-            z-index: 5; /* Layer 5: Paling atas */
+            z-index: 5; 
             border-radius: 10px 10px 0 0;
         }
 
-        /* Kartu Isi */
+        /* --- KARTU ISI (QR Code) --- */
         .card-content {
             position: absolute;
             bottom: 0; 
@@ -114,9 +116,14 @@
             text-align: center;
             border-radius: 8px;
             box-shadow: 0 -5px 15px rgba(0,0,0,0.1);
-            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55); 
-            z-index: 1; /* Layer 1: Paling belakang */
+            
+            /* --- PERUBAHAN UTAMA DISINI --- */
+            opacity: 0; /* Awalnya tidak terlihat sama sekali */
+            z-index: 1; 
+            
             border: 2px dashed #ffcbd7;
+            /* Transisi untuk transform dan opacity */
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease;
         }
 
         .card-content h2 {
@@ -191,7 +198,9 @@
         }
 
         .container.open .card-content {
-            /* Posisi kartu yang "enak dilihat" (tidak terlalu tinggi) */
+            /* Munculkan kartu saat dibuka */
+            opacity: 1; 
+            
             transform: translateX(-50%) translateY(-135px); 
             z-index: 4; 
             transition-delay: 0.2s; 
@@ -227,7 +236,7 @@
             </div>
 
             <div class="envelope-body">
-                <img src="public/img/logo-tunda.png" alt="Logo TUNDA" class="envelope-logo" style="background-color: white;">
+                <img src="public/img/logo-tunda.png" alt="Logo TUNDA" class="envelope-logo">
             </div>
         </div>
 
